@@ -111,6 +111,7 @@ def normalize_counts(counts):
     for current_count in counts.values():
         sample_number+=current_count
 
+    #or sample_number = sum(counts.values())
     for current_alp,current_count in counts.items():
         result_dic[current_alp] = current_count/float(sample_number)
     return result_dic
