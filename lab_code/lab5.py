@@ -35,9 +35,10 @@ def production_distribution(psents):
     for psent in psents:
         for production in psent.productions():
             if production.is_lexical():
-                pass # students replace this
+                lexdict[production] += 1
+                # students replace this
             else:
-                pass # students replace this
+                nonlexdict[production] += 1
     return lexdict,nonlexdict
 
 def recursive_descent_parser(grammar, sentence, trace=2):
@@ -82,9 +83,9 @@ grammar1=parse_grammar("""
      Vp -> "eat" | "eats" | "ate" | "see" | "saw" | "prefer" | "gave"
     """)
 
-sentence1 = "he ate salad"
-parse_tree = recursive_descent_parser(grammar1, sentence1, trace=0)
-print_parse_info(parse_tree)
+#sentence1 = "he ate salad"
+#parse_tree = recursive_descent_parser(grammar1, sentence1, trace=0)
+#print_parse_info(parse_tree)
 
 #If you uncomment this line, you'll get a detailed trace of all parsing actions
 #parse_tree = recursive_descent_parser(grammar1, sentence1)
@@ -93,5 +94,32 @@ print_parse_info(parse_tree)
 #sentence2 = "he ate salad with mushrooms"
 #sentence3 = "he ate salad with a fork"
 
-#psents = treebank.parsed_sents()
-#print_parse_info(psents[0])
+psents = treebank.parsed_sents()
+print_parse_info(psents[0])
+print(type(psents[0]))
+
+lexicalFD,phrasalFD = production_distribution(psents)
+
+lexical_sorted = sorted(lexicalFD.items(), key=lambda x:x[1], reverse = True)
+phraselexical_sorted = sorted(phrasalFD.items(), key=lambda x:x[1], reverse = True)
+
+print('lexical')
+total_FD = 0
+for current_FD in lexicalFD.values():
+    total_FD += current_FD
+for current_FD in phrasalFD.values():
+    total_FD += current_FD
+
+tenper_FD = 0
+for i in range(10):
+    print(lexical_sorted[i])
+    tenper_FD += lexical_sorted[i][1]
+print('phrasal')
+for i in range(10):
+    print(phraselexical_sorted[i])
+    tenper_FD += phraselexical_sorted[i][1]
+
+# go further 1
+print(tenper_FD/total_FD)
+
+# go further 
