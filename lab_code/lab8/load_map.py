@@ -15,3 +15,6 @@ for line in fp:
     wid=int(widstr)
     wid2word[wid]=word
     word2wid[word]=wid
+# print(len(wid2word.keys()))
+# print(word2wid['@bbcnews'])
+# print(wid2word[213])
